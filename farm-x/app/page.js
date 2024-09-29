@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
-import { Box, Button, BottomNavigation, BottomNavigationAction, Typography, CircularProgress } from "@mui/material";
+import { Box, Button, BottomNavigation, BottomNavigationAction, Typography, CircularProgress, TextField } from "@mui/material";
 import Home from "@mui/icons-material/Home";
 import Diamond from "@mui/icons-material/Diamond";
 import Info from "@mui/icons-material/Info";
@@ -47,12 +47,103 @@ const HomePage = () => (
   </Box>
 );
 
-const Soil = () => (
-  <Box sx={{ p: 2 }}>
-    <Typography variant="h4" align="center">Soil Page</Typography>
-    <Typography variant="body1" align="center">This is the content for the Soil Optimization page.</Typography>
-  </Box>
-);
+const Soil = () => {
+  const [formData, setFormData] = useState({
+    humidity: "",
+    temperature: "",
+    rainfall: "",
+    ph: "",
+    id: "",
+  });
+
+  const [result, setResult] = useState(null);
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Submit form and fetch predictions
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("/api/soil-optimization", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+    setResult(data);
+  };
+
+  return (
+    <Box sx={{ p: 2 }}>
+      <Typography variant="h4" align="center">Soil Optimization</Typography>
+      <Typography variant="body1" align="center">Enter the required values below to optimize soil parameters.</Typography>
+
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Humidity"
+          name="humidity"
+          value={formData.humidity}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Temperature"
+          name="temperature"
+          value={formData.temperature}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Rainfall"
+          name="rainfall"
+          value={formData.rainfall}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="pH"
+          name="ph"
+          value={formData.ph}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="ID"
+          name="id"
+          value={formData.id}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Get Optimization Results
+        </Button>
+      </form>
+
+      {result && (
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="h6">Optimization Results:</Typography>
+          <Typography>N Category: {result.n_category}</Typography>
+          <Typography>K Category: {result.k_category}</Typography>
+          <Typography>P Category: {result.p_category}</Typography>
+          <Typography>N Value: {result.n_value}</Typography>
+        </Box>
+      )}
+    </Box>
+  );
+};
 
 const AboutUs = () => (
   <Box sx={{ p: 2 }}>
