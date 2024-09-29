@@ -7,6 +7,10 @@ import Info from "@mui/icons-material/Info";
 import ResourcesIcon from "@mui/icons-material/Interests";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import logo from "../../farm-x/app/logo.png"; // Import logo image
+import Image from "next/image";
+import favicon from "../../farm-x/app/favicon.ico"; // Import favicon image
+
 
 // Load Metropolis font
 const theme = createTheme({
@@ -28,7 +32,7 @@ const LoadingScreen = () => (
   <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
     {/* Placeholder for logo */}
     <Box sx={{ mb: 2 }}>
-      <img src="/logo-placeholder.png" alt="Logo" width="150" height="150" /> {/* Replace with actual logo */}
+      <Image src={favicon} alt="Logo" width="150" height="150" /> {/* Replace with the actual logo path */}
     </Box>
     <CircularProgress />
     <Typography variant="h6" color="primary" sx={{ mt: 2 }}>Loading...</Typography>
@@ -128,13 +132,15 @@ export default function Base() {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ height: '100vh', position: 'relative' }}>
-        {/* Show loading screen if loading, otherwise show main content */}
         {loading ? (
           <LoadingScreen />
         ) : (
           <>
-            <Typography variant="h1" color='#18453b' align="center">FarmX</Typography>
-
+              <Image
+                src={logo} 
+                alt="FarmX Logo"
+                style={{ maxHeight: '150px', maxWidth: '100%', objectFit: 'contain' }}
+              />
             {/* Render the selected page content */}
             <Box sx={{ flex: 1 }}>
               {renderPageContent()}
