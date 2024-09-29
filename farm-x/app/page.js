@@ -4,8 +4,8 @@ import { Box, BottomNavigation, BottomNavigationAction, Typography } from "@mui/
 import Home from "@mui/icons-material/Home";
 import Diamond from "@mui/icons-material/Diamond";
 import Info from "@mui/icons-material/Info";
-import Resources from "@mui/icons-material/Interests";
-import Profile from "@mui/icons-material/AccountCircle";
+import ResourcesIcon from "@mui/icons-material/Interests";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // Define the theme
@@ -21,16 +21,16 @@ const theme = createTheme({
 });
 
 // Components for different pages
-const Home = () => (
+const HomePage = () => (
   <Box sx={{ p: 2 }}>
     <Typography variant="h4" align="center">Home Page</Typography>
     <Typography variant="body1" align="center">This is the content for the Home page.</Typography>
   </Box>
 );
 
-const Favorites = () => (
+const Soil = () => (
   <Box sx={{ p: 2 }}>
-    <Typography variant="h4" align="center">Favorites Page</Typography>
+    <Typography variant="h4" align="center">Soil Page</Typography>
     <Typography variant="body1" align="center">This is the content for the Favorites page.</Typography>
   </Box>
 );
@@ -64,13 +64,17 @@ export default function Base() {
   const renderPageContent = () => {
     switch (value) {
       case 0:
-        return <Recents />;
+        return <HomePage />;
       case 1:
-        return <Favorites />;
+        return <Soil />;
       case 2:
         return <AboutUs />;
+      case 3:
+        return <Resources />;
+      case 4:
+        return <Profile />;
       default:
-        return <Recents />;
+        return <HomePage />;
     }
   };
 
@@ -107,8 +111,8 @@ export default function Base() {
           <BottomNavigationAction label="Home" icon={<Home />} />
           <BottomNavigationAction label="Soil Optimization" icon={<Diamond />} />
           <BottomNavigationAction label="About Us" icon={<Info />} />
-          <BottomNavigationAction label="Resources" icon={<Resources />} />
-          <BottomNavigationAction label="My Account" icon={<Profile />} />
+          <BottomNavigationAction label="Resources" icon={<ResourcesIcon />} />
+          <BottomNavigationAction label="My Account" icon={<AccountCircle />} />
         </BottomNavigation>
       </Box>
     </ThemeProvider>
